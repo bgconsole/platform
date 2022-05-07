@@ -8,6 +8,7 @@ import com.bgconsole.platform.engine.project.ENGINE_USER_SESSION_PROJECT
 import com.bgconsole.platform.engine.workspace.ENGINE_USER_SESSION_WORKSPACE
 import com.bgconsole.platform.store.Store
 import com.bgconsole.platform.store.Subscriber
+import com.bgconsole.platform.ui.project.ProjectTypeRedux
 import javafx.application.HostServices
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -62,6 +63,7 @@ open class WorkspacePerspectiveController {
                         //                        AppData.instance.addProject(project);
 //                        ProjectWindow(project)
 //                        store.dispatch(OpenProject(project))
+                        store.dispatch(ProjectTypeRedux.NewInstance(project))
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }

@@ -4,9 +4,13 @@ import com.bgconsole.platform.store.Store
 import com.bgconsole.platform.store.Subscriber
 import com.bgconsole.platform.ui.perspective.PLATFORM_PERSPECTIVE
 import com.bgconsole.platform.ui.perspective.PerspectiveContent
+import javafx.application.HostServices
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+import javafx.scene.control.Alert
+import javafx.scene.control.Hyperlink
 import javafx.scene.layout.StackPane
+import kotlin.system.exitProcess
 
 class PlatformWindowController {
 
@@ -16,6 +20,8 @@ class PlatformWindowController {
     private lateinit var perspectiveContent: PerspectiveContent
 
     private lateinit var store: Store
+
+    private lateinit var hostServices: HostServices
 
     fun setStore(store: Store) {
         this.store = store
@@ -27,6 +33,10 @@ class PlatformWindowController {
                 updatePerspective(entity as PerspectiveContent)
             }
         })
+    }
+
+    fun setHostServices(hostServices: HostServices?) {
+        this.hostServices = hostServices!!
     }
 
     private fun updatePerspective(newPerspective: PerspectiveContent) {
@@ -49,7 +59,7 @@ class PlatformWindowController {
     }
 
     fun quit(actionEvent: ActionEvent) {
-
+        exitProcess(0)
     }
 
     fun newWorkspace(actionEvent: ActionEvent) {
@@ -69,11 +79,15 @@ class PlatformWindowController {
     }
 
     fun help(actionEvent: ActionEvent) {
-
+        hostServices.showDocument(Hyperlink("https://bgconsole.com/docs/").text)
     }
 
     fun about(actionEvent: ActionEvent) {
-
+        val alert = Alert(Alert.AlertType.INFORMATION)
+        alert.title = "About BG Console"
+        alert.headerText = "BG Console version: 2.0"
+        alert.contentText = "More info: https://bgconsole.com"
+        alert.showAndWait()
     }
 
 

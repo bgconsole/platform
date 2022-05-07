@@ -50,11 +50,10 @@ class PerspectiveRedux(store: Store) {
             action: SwitchPerspectiveSucceeded,
             current: PerspectiveContent
         ): PerspectiveContent {
-            val newStack: List<Perspective> =
-                current.perspectiveStack.filter { it.getId() != action.perspectiveId } + current.perspectives.getValue(
-                    action.perspectiveId
-                )
-            return current.copy(perspectiveStack = newStack)
+            val newStack: MutableList<Perspective> =
+                current.perspectiveStack.filter { it.getId() != action.perspectiveId }.toMutableList()
+            newStack.add(0, current.perspectives.getValue(action.perspectiveId))
+            return current.copy(perspectiveStack = newStack.toList())
         }
     }
 

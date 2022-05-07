@@ -2,6 +2,7 @@ package com.bgconsole.platform.ui
 
 import com.bgconsole.platform.store.Store
 import com.bgconsole.platform.ui.perspective.PerspectiveContent
+import javafx.application.HostServices
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -9,7 +10,7 @@ import javafx.scene.image.Image
 import javafx.stage.Stage
 import java.util.*
 
-class PlatformWindow(stage: Stage, private val store: Store) {
+class PlatformWindow(stage: Stage, private val store: Store, hostServices: HostServices) {
 
     private var controller: PlatformWindowController
 
@@ -19,6 +20,7 @@ class PlatformWindow(stage: Stage, private val store: Store) {
         val root = loader.load<Parent>()
         controller = loader.getController()
         controller.setStore(store)
+        controller.setHostServices(hostServices)
         val scene = Scene(root)
         stage.scene = scene
         scene.stylesheets.add(javaClass.getResource("/com/bgconsole/platform/ui/styles.css")?.toExternalForm())
