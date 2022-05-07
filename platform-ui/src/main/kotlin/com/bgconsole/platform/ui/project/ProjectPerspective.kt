@@ -9,5 +9,7 @@ abstract class ProjectPerspective : Perspective() {
 
     abstract fun setProject(project: Project)
 
+    abstract fun getProject(): Project
+
     abstract fun getProjectType(): String
 }

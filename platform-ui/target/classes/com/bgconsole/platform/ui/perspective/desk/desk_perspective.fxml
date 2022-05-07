@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <StackPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.bgconsole.platform.ui.perspective.workspace.WorkspacePerspectiveController"
+            fx:controller="com.bgconsole.platform.ui.perspective.desk.WorkspacePerspectiveController"
             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
             AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <SplitPane dividerPositions="0.3"

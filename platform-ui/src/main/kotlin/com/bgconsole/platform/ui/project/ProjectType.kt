@@ -7,5 +7,7 @@ abstract class ProjectType {
 
     abstract fun getProjectType(): String
 
+    abstract fun getProjectName(): String
+
     abstract fun factory(store: Store, project: Project): ProjectPerspective
 }

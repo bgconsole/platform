@@ -1,4 +1,4 @@
-package com.bgconsole.platform.ui.perspective.workspace
+package com.bgconsole.platform.ui.perspective.desk
 
 import com.bgconsole.platform.domain.Profile
 import com.bgconsole.platform.domain.Workspace

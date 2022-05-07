@@ -5,7 +5,7 @@ import com.bgconsole.platform.engine.PlatformCoreService
 import com.bgconsole.platform.engine.profile.ProfileRedux.LoadProfiles
 import com.bgconsole.platform.store.Store
 import com.bgconsole.platform.ui.perspective.PerspectiveRedux
-import com.bgconsole.platform.ui.perspective.workspace.WorkspacePerspective
+import com.bgconsole.platform.ui.perspective.desk.DeskPerspective
 import com.bgconsole.platform.ui.project.ProjectPerspectiveRedux
 import com.bgconsole.platform.ui.project.ProjectTypeRedux
 import javafx.application.HostServices
@@ -30,11 +30,11 @@ class BGPlatform(dir: Location, store: Store, stage: Stage, hostServices: HostSe
     }
 
     private fun loadDefaultPerspective(store: Store) {
-        val workspacePerspective = WorkspacePerspective()
-        workspacePerspective.setStore(store)
-        workspacePerspective.onInit()
-        store.dispatch(PerspectiveRedux.RegisterPerspective(workspacePerspective))
-        store.dispatch(PerspectiveRedux.SwitchPerspective(workspacePerspective.getId()))
+        val deskPerspective = DeskPerspective()
+        deskPerspective.setStore(store)
+        deskPerspective.onInit()
+        store.dispatch(PerspectiveRedux.RegisterPerspective(deskPerspective))
+        store.dispatch(PerspectiveRedux.SwitchPerspective(deskPerspective.getId()))
     }
 
     private fun loadDefaultData(store: Store) {
