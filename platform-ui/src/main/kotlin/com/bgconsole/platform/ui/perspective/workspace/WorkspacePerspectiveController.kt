@@ -23,7 +23,7 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 
-class WorkspacePerspectiveController {
+open class WorkspacePerspectiveController {
 
     @FXML
     private lateinit var workspaceList: ListView<Workspace>
@@ -40,28 +40,17 @@ class WorkspacePerspectiveController {
 
     private lateinit var store: Store
 
-//    private var profileWindow: ProfileWindow? = null
-
-//    private final ProfileService profileService;
-
-    //    private final ProfileService profileService;
     private var mainWindow: WorkspacePerspectiveContent? = null
 
     private var hostServices: HostServices? = null
-
-
-
-    fun MainWindowController() {
-//        profileService = AppData.instance.getProfileService();
-    }
 
     fun setStore(store: Store) {
         this.store = store
         projectObservableList = FXCollections.observableArrayList()
         val name = TableColumn<Project, String>("Project")
-        name.setCellValueFactory(PropertyValueFactory("Name"))
+        name.cellValueFactory = PropertyValueFactory("Name")
         val description = TableColumn<Project, String>("Description")
-        description.setCellValueFactory(PropertyValueFactory("Description"))
+        description.cellValueFactory = PropertyValueFactory("Description")
         projectTable.columns.add(name)
         projectTable.columns.add(description)
         projectTable.setRowFactory { tableView: TableView<Project>? ->
@@ -81,11 +70,11 @@ class WorkspacePerspectiveController {
             row
         }
         projectTable.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
-        projectTable.setItems(projectObservableList)
+        projectTable.items = projectObservableList
         val profileList = FXCollections.observableArrayList<Profile?>()
         //        profileSelector.getSelectionModel().selectFirst();
-        profileSelector!!.setConverter(ProfileObservableConverter(profileList))
-        profileSelector.setItems(profileList)
+        profileSelector.converter = ProfileObservableConverter(profileList)
+        profileSelector.items = profileList
         store.subscribe(
             ENGINE_USER_SESSION_PROFILE,
             object : Subscriber {
@@ -95,15 +84,14 @@ class WorkspacePerspectiveController {
             })
         profileList.setAll(store.get(ENGINE_USER_SESSION_PROFILE) as List<Profile?>?)
         val workspaceObservableList = FXCollections.observableArrayList<Workspace>()
-        workspaceList!!.setCellFactory { profileListView: ListView<Workspace>? ->
+        workspaceList.setCellFactory {
             object : ListCell<Workspace?>() {
-                protected fun updateItem(item: Workspace, empty: Boolean) {
+                override fun updateItem(item: Workspace?, empty: Boolean) {
                     super.updateItem(item, empty)
-                    text = if (empty || item == null) {
+                    text = if (empty) {
                         null
                     } else {
-                        item.name
-                        item.name
+                        item?.name
                     }
                 }
             }
@@ -115,7 +103,7 @@ class WorkspacePerspectiveController {
                 )
             )
         }
-        workspaceList.setItems(workspaceObservableList)
+        workspaceList.items = workspaceObservableList
         store.subscribe(
             ENGINE_USER_SESSION_WORKSPACE,
             object : Subscriber {
@@ -134,7 +122,7 @@ class WorkspacePerspectiveController {
         store.subscribe(UI_MAIN_WINDOW,
             object : Subscriber {
                 override fun update(entity: Any) {
-                    mainWindow = mainWindow as WorkspacePerspectiveContent?
+                    mainWindow = entity as WorkspacePerspectiveContent?
                 }
             })
     }
@@ -142,11 +130,6 @@ class WorkspacePerspectiveController {
 
     fun setHostServices(hostServices: HostServices?) {
         this.hostServices = hostServices
-    }
-
-    @FXML
-    fun quit(event: ActionEvent?) {
-        System.exit(0)
     }
 
     @FXML
@@ -187,7 +170,7 @@ class WorkspacePerspectiveController {
     }
 
     fun changeProfile(event: ActionEvent?) {
-        if (profileSelector!!.value != null) {
+        if (profileSelector.value != null) {
             setCurrentProfile(profileSelector.value)
         }
     }

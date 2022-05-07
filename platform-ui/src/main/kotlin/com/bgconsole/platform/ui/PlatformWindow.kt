@@ -1,7 +1,7 @@
 package com.bgconsole.platform.ui
 
 import com.bgconsole.platform.store.Store
-import com.bgconsole.platform.ui.perspective.workspace.WorkspacePerspective
+import com.bgconsole.platform.ui.perspective.PerspectiveContent
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -9,15 +9,16 @@ import javafx.scene.image.Image
 import javafx.stage.Stage
 import java.util.*
 
-class PlatformWindow(private val stage: Stage, private val store: Store) {
+class PlatformWindow(stage: Stage, private val store: Store) {
 
-    private var controller: PlatformWindowController? = null
+    private var controller: PlatformWindowController
 
     init {
         val resource = javaClass.getResource("/com/bgconsole/platform/ui/platform_window.fxml")
         val loader = FXMLLoader(resource)
         val root = loader.load<Parent>()
         controller = loader.getController()
+        controller.setStore(store)
         val scene = Scene(root)
         stage.scene = scene
         scene.stylesheets.add(javaClass.getResource("/com/bgconsole/platform/ui/styles.css")?.toExternalForm())
@@ -31,13 +32,8 @@ class PlatformWindow(private val stage: Stage, private val store: Store) {
         )
         stage.scene = scene
         stage.show()
-        loadDefaultPerspective()
+
+
     }
 
-    private fun loadDefaultPerspective() {
-        val workspacePerspective = WorkspacePerspective()
-        workspacePerspective.setStore(store)
-        val node = workspacePerspective.getNode()
-        controller?.setPerspective(node)
-    }
 }

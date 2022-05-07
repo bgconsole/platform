@@ -1,8 +1,11 @@
 package com.bgconsole.platform.ui
 
+import com.bgconsole.platform.store.Store
+import com.bgconsole.platform.store.Subscriber
+import com.bgconsole.platform.ui.perspective.PLATFORM_PERSPECTIVE
+import com.bgconsole.platform.ui.perspective.PerspectiveContent
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
-import javafx.scene.Node
 import javafx.scene.layout.StackPane
 
 class PlatformWindowController {
@@ -10,8 +13,35 @@ class PlatformWindowController {
     @FXML
     lateinit var appContent: StackPane
 
-    fun setPerspective(node: Node) {
-        appContent.children.add(0, node)
+    private lateinit var perspectiveContent: PerspectiveContent
+
+    private lateinit var store: Store
+
+    fun setStore(store: Store) {
+        this.store = store
+
+        val newPerspective = store.get(PLATFORM_PERSPECTIVE) as PerspectiveContent
+        updatePerspective(newPerspective)
+        store.subscribe(PLATFORM_PERSPECTIVE, object : Subscriber {
+            override fun update(entity: Any) {
+                updatePerspective(entity as PerspectiveContent)
+            }
+        })
+    }
+
+    private fun updatePerspective(newPerspective: PerspectiveContent) {
+        if (newPerspective.perspectiveStack.isNotEmpty()) {
+            if (perspectiveContent.perspectiveStack.isNotEmpty()) {
+                val currentId = perspectiveContent.perspectiveStack.first().getId()
+                if (currentId != newPerspective.perspectiveStack.first().getId()) {
+                    appContent.children.removeFirst()
+                    appContent.children.add(newPerspective.perspectiveStack.first().getNode())
+                }
+            } else {
+                appContent.children.add(newPerspective.perspectiveStack.first().getNode())
+            }
+        }
+        perspectiveContent = newPerspective
     }
 
     fun openProfileManager(actionEvent: ActionEvent) {
