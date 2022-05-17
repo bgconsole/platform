@@ -4,6 +4,7 @@ import com.bgconsole.platform.domain.Location
 import com.bgconsole.platform.engine.PlatformCoreService
 import com.bgconsole.platform.engine.profile.ProfileRedux.LoadProfiles
 import com.bgconsole.platform.store.Store
+import com.bgconsole.platform.ui.component.ComponentRedux
 import com.bgconsole.platform.ui.perspective.PerspectiveRedux
 import com.bgconsole.platform.ui.perspective.desk.DeskPerspective
 import com.bgconsole.platform.ui.project.ProjectPerspectiveRedux
@@ -27,6 +28,7 @@ class BGPlatform(dir: Location, store: Store, stage: Stage, hostServices: HostSe
         PerspectiveRedux(store)
         ProjectPerspectiveRedux(store)
         ProjectTypeRedux(store)
+        ComponentRedux(store)
     }
 
     private fun loadDefaultPerspective(store: Store) {

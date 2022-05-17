@@ -5,8 +5,14 @@ import com.bgconsole.platform.store.Reducer
 import com.bgconsole.platform.store.Service
 import com.bgconsole.platform.store.Store
 import com.bgconsole.platform.ui.Perspective
+import com.bgconsole.platform.ui.component.Component
+import com.bgconsole.platform.ui.component.ComponentPerspective
+import com.bgconsole.platform.ui.component.PLATFORM_COMPONENT_ID
+import com.bgconsole.platform.ui.project.PLATFORM_PERSPECTIVE_PROJECT
 
 const val PLATFORM_PERSPECTIVE = "platform.ui.perspective"
+
+val DEFAULT_COMPONENT: ComponentPerspective = ComponentPerspective()
 
 class PerspectiveRedux(store: Store) {
 
@@ -15,6 +21,7 @@ class PerspectiveRedux(store: Store) {
     private class SwitchPerspectiveSucceeded(val perspectiveId: String) : Action(PLATFORM_PERSPECTIVE)
     class ClosePerspective(val perspectiveId: String) : Action(PLATFORM_PERSPECTIVE)
     private class ClosePerspectiveSucceeded(val perspectiveId: String) : Action(PLATFORM_PERSPECTIVE)
+    class ShowComponent(val component: Component) : Action(PLATFORM_PERSPECTIVE_PROJECT)
 
     init {
         store.registerReducer(PerspectiveReducer())
@@ -94,6 +101,6 @@ class PerspectiveRedux(store: Store) {
 
 data class PerspectiveContent(val perspectives: Map<String, Perspective>, val perspectiveStack: List<Perspective>) {
     companion object {
-        fun default() = PerspectiveContent(emptyMap(), emptyList())
+        fun default() = PerspectiveContent(mapOf(PLATFORM_COMPONENT_ID to DEFAULT_COMPONENT), emptyList())
     }
 }

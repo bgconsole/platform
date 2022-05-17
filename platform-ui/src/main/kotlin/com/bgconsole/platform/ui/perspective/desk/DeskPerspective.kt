@@ -57,11 +57,11 @@ class DeskPerspective : Perspective() {
     }
 
     private fun createMenu(): List<Menu> {
-        val menuWorkspace = Menu("Desk")
+        val menuDesk = Menu("Desk")
         val profileMenuItem = MenuItem("Profile manager...")
         profileMenuItem.onAction = EventHandler { openProfileManager() }
-        menuWorkspace.items.add(profileMenuItem)
-        return listOf(menuWorkspace)
+        menuDesk.items.add(profileMenuItem)
+        return listOf(menuDesk)
     }
 
     private fun openProfileManager() {
