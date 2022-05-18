@@ -19,7 +19,6 @@ class ComponentRedux(store: Store) {
         store.addToStore(PLATFORM_COMPONENT, ComponentContent.default())
     }
 
-
     private class ComponentReducer : Reducer<ComponentContent> {
         override fun getKey(): String = PLATFORM_COMPONENT
 
@@ -46,6 +45,7 @@ class ComponentRedux(store: Store) {
 
         private fun showComponent(store: Store, action: ShowComponent) {
             defaultComponent.setComponent(action.component)
+            action.component.onInit()
             store.dispatch(PerspectiveRedux.SwitchPerspective(PLATFORM_COMPONENT_ID))
         }
 
